@@ -1,0 +1,59 @@
+Part-III
+
+
+1. a.
+
+groupA <- dbGetQuery(con,"select distinct c.p_id from clinical_fact c, disease d where d.name='ALL'and c.ds_id=to_char(d.ds_id)")
+
+
+groupB <- dbGetQuery(con,"select distinct c.p_id from clinical_fact c, disease d where d.name !='ALL'and c.ds_id=to_char(d.ds_id)")
+
+b. 
+
+create view view_gene1(u_id,exp1) as
+select  distinct u_id, exp from clinical_fact cf, microarray_fact m, probe p where p_id in ( select  distinct p_id from clinical_fact c, disease d where d.name='ALL' and c.ds_id=to_char(d.ds_id)) and cf.s_id != 'null' and m.s_id=cf.s_id and p.pb_id=m.pb_id;
+
+create view view_gene2(u_id,exp2) as
+select  distinct u_id, exp from clinical_fact cf, microarray_fact m, probe p where p_id in ( select  distinct p_id from clinical_fact c, disease d where d.name !='ALL' and c.ds_id=to_char(d.ds_id)) and cf.s_id != 'null' and m.s_id=cf.s_id and p.pb_id=m.pb_id;
+
+
+CREATE TABLE v_gene
+(
+gene number,
+value varchar(2),
+exp varchar(20)
+);
+
+insert into v_gene (gene, value, exp)
+select u_id, '0', exp1 from view_gene1;
+
+insert into v_gene (gene, value, exp)
+select u_id, '1', exp2 from view_gene2;
+ 
+  select gene ,
+      round(avg(decode(value, '0', exp, null)),2) d_all,
+      round(avg(decode(value, '1', exp, null)),2) d_other,
+      round(stats_t_test_indep(value, exp, 'STATISTIC', '0'),2) t_stats,
+      round(stats_t_test_indep(value, exp),2) p_value
+  FROM v_gene
+  group by rollup(gene);
+
+
+c:
+
+ create view informative(gene, p_value) as
+ select gene, p_value from
+  (select gene ,
+      round(avg(decode(value, '0', exp, null)),2) d_all,
+      round(avg(decode(value, '1', exp, null)),2) d_other,
+      round(stats_t_test_indep(value, exp, 'STATISTIC', '0'),2) t_stats,
+      stats_t_test_indep(value, exp) p_value
+  from v_gene
+  group by rollup(gene));
+  
+  select gene from informative
+  where p_value < 0.01;
+
+
+
+http://courses.statistics.com/software/R/R1way.htm

@@ -1,0 +1,14 @@
+PROJECT 1  - README
+
+
+1) Some parts of the project are to be executed in SQL. 
+2) The correlation and t-tests are to be done in R
+3) The UI is not fully functional and will only work for limited number of queries
+4) In order for the UI to work, we need to rebuild the R environment and in the queries character vector starting with c(), replace the first query with the query of your choice 
+5) Re run the names(queries ) command and then re run the app to see the output along with the search filter we applied in R
+6) ALl the results are documented in the word format
+7) the connection parameters are set in the R con statement
+8) The queries .txt file that contains the R part is also included in the zip file
+9) To test the R functions kindly, connect to the database as mentioned in the data.R file and just run the R-part of the queries in the .txt files
+
+

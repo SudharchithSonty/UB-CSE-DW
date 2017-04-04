@@ -1,0 +1,4 @@
+PATIENT_COUNT_ALL      PATIENT_COUNT_LEUKEMIA PATIENT_COUNT_TUMOR    
+---------------------- ---------------------- ---------------------- 
+13                     27                     53                     
+

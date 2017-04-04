@@ -1,0 +1,65 @@
+PATIENT_COUNT_ALL      PATIENT_COUNT_LEUKEMIA PATIENT_COUNT_TUMOR    
+---------------------- ---------------------- ---------------------- 
+13                     27                     53                     
+
+
+Error starting at line 1 in command:
+"select distinct a.type
+Error report:
+Unknown Command
+
+Error starting at line 2 in command:
+from drug a,
+Error report:
+Unknown Command
+
+Error starting at line 3 in command:
+(select distinct c.p_id, c.dr_id
+                   from clinical_fact c, disease d
+                   where d.description='tumor'
+                   and c.ds_id=to_char(d.ds_id)) b
+                   where to_char(a.dr_id)=b.dr_id";
+Error at Command Line:6 Column:49
+Error report:
+SQL Error: ORA-00933: SQL command not properly ended
+00933. 00000 -  "SQL command not properly ended"
+*Cause:    
+*Action:
+
+Error starting at line 1 in command:
+select distinct a.type
+                   from drug a,
+                   (select distinct c.p_id, c.dr_id
+                   from clinical_fact c, disease d
+                   where d.description='tumor'
+                   and c.ds_id=to_char(d.ds_id)) b
+                   where to_char(a.dr_id)=b.dr_id";
+Error at Command Line:7 Column:49
+Error report:
+SQL Error: ORA-01740: missing double quote in identifier
+01740. 00000 -  "missing double quote in identifier"
+*Cause:    
+*Action:
+TYPE                                               
+-------------------------------------------------- 
+Drug Type 015                                      
+Drug Type 011                                      
+Drug Type 018                                      
+Drug Type 019                                      
+Drug Type 004                                      
+Drug Type 005                                      
+Drug Type 003                                      
+Drug Type 006                                      
+Drug Type 002                                      
+Drug Type 012                                      
+Drug Type 010                                      
+Drug Type 017                                      
+Drug Type 013                                      
+Drug Type 016                                      
+Drug Type 007                                      
+Drug Type 008                                      
+Drug Type 014                                      
+Drug Type 020                                      
+Drug Type 009                                      
+ 19 rows selected 
+
